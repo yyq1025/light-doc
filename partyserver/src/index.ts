@@ -12,14 +12,16 @@ export class MyYServer extends YServer {
 		timeout: 5000,
 	};
 
-	private db!: DrizzleD1Database;
+	private db: DrizzleD1Database | null = null;
 
-	async onStart() {
-		this.db = drizzle(this.env.DB);
+	private getDb() {
+		if (!this.db) this.db = drizzle(this.env.DB);
+		return this.db;
 	}
 
 	async onLoad() {
-		const row = await this.db
+		const db = this.getDb();
+		const row = await db
 			.select()
 			.from(yDocs)
 			.where(eq(yDocs.name, this.name))
@@ -30,8 +32,9 @@ export class MyYServer extends YServer {
 	}
 
 	async onSave() {
+		const db = this.getDb();
 		const update = Y.encodeStateAsUpdate(this.document);
-		await this.db
+		await db
 			.insert(yDocs)
 			.values({ name: this.name, state: update, updatedAt: new Date() })
 			.onConflictDoUpdate({
