@@ -28,10 +28,11 @@ export const hslToHex = (h: number, s: number, l: number): string => {
   return `#${f(0)}${f(8)}${f(4)}`;
 };
 
+export const LOCALSTORAGE_USER_KEY = "tiptap:user";
+export const USER_CHANNEL_NAME = "bc:tiptap:user";
 export const getOrCreateUser = () => {
-  const key = "tiptap:user";
   try {
-    const raw = localStorage.getItem(key);
+    const raw = localStorage.getItem(LOCALSTORAGE_USER_KEY);
     if (!raw) throw new Error("No user found");
     return UserInfoSchema.parse(JSON.parse(raw));
   } catch {
@@ -40,7 +41,7 @@ export const getOrCreateUser = () => {
       color: hslToHex(random(0, 360), random(55, 65), random(35, 40)),
       id: nanoid(),
     };
-    localStorage.setItem(key, JSON.stringify(user));
+    localStorage.setItem(LOCALSTORAGE_USER_KEY, JSON.stringify(user));
     return user;
   }
 };

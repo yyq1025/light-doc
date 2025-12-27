@@ -101,6 +101,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useCollabEditor } from "@/hooks/use-collab-editor";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { useCurrentUser } from "@/hooks/use-current-user";
 import { downloadTextFile, pickAndReadTextFile } from "@/lib/tiptap";
 import { cn } from "@/lib/utils";
 
@@ -553,19 +554,14 @@ const formSchema = z.object({
 
 export default function Tiptap({ room }: { room?: string }) {
   const navigate = useNavigate();
-  const {
-    editor,
-    currentUser,
-    updateCurrentUser,
-    uniqueUsers,
-    prepareSeedFromEditor,
-    hasSeed,
-  } = useCollabEditor(room);
+  const { currentUser, updateCurrentUser } = useCurrentUser();
+  const { editor, uniqueUsers, prepareSeedFromEditor, hasSeed } =
+    useCollabEditor(room, currentUser);
   const [showAlertDialog, setShowAlertDialog] = useState(false);
   const [showCollabDialog, setShowCollabDialog] = useState(false);
   const { copyToClipboard, isCopied } = useCopyToClipboard();
   const copyToNewRoom = () => {
-    if (!editor || hasSeed) return;
+    if (!editor || hasSeed()) return;
     prepareSeedFromEditor();
     const roomId = nanoid();
     navigate({
@@ -805,7 +801,7 @@ export default function Tiptap({ room }: { room?: string }) {
                   </DialogClose>
                   <Button
                     type="button"
-                    disabled={!!room || hasSeed}
+                    disabled={!!room}
                     onClick={copyToNewRoom}
                   >
                     <Play /> Start Session

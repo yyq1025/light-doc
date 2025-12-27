@@ -11,28 +11,45 @@ import { useEditorState } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { prosemirrorJSONToYDoc } from "@tiptap/y-tiptap";
 import { uniqBy } from "lodash-es";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useEffectEvent,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { IndexeddbPersistence } from "y-indexeddb";
 import YProvider from "y-partyserver/provider";
 import { WebrtcProvider } from "y-webrtc";
 import * as Y from "yjs";
 import type { UserInfo } from "@/lib/tiptap";
-import { getOrCreateUser, getRoomKey, Y_FRAGMENT_NAME } from "@/lib/tiptap";
+import { getRoomKey, Y_FRAGMENT_NAME } from "@/lib/tiptap";
 
 type UseCollabEditorResult = {
   editor: Editor | null;
-  currentUser: UserInfo;
-  updateCurrentUser: (user: UserInfo) => void;
   uniqueUsers: (UserInfo & { clientId: number })[];
   prepareSeedFromEditor: () => void;
-  hasSeed: boolean;
+  hasSeed: () => boolean;
 };
 
-export const useCollabEditor = (room?: string): UseCollabEditorResult => {
-  const [currentUser, setCurrentUser] = useState(() => getOrCreateUser());
+export const useCollabEditor = (
+  room: string | undefined,
+  currentUser: UserInfo,
+): UseCollabEditorResult => {
   const currentUserRef = useRef(currentUser);
+  currentUserRef.current = currentUser;
+
   const seedDocRef = useRef<Y.Doc | null>(null);
   const [editor, setEditor] = useState<Editor | null>(null);
+
+  const UpdateEditorUser = useEffectEvent((user: UserInfo) => {
+    editor?.commands.updateUser(user);
+  });
+
+  useEffect(() => {
+    UpdateEditorUser(currentUser);
+  }, [currentUser]);
 
   const prepareSeedFromEditor = useCallback(() => {
     if (!editor || seedDocRef.current) return;
@@ -43,18 +60,7 @@ export const useCollabEditor = (room?: string): UseCollabEditorResult => {
     );
   }, [editor]);
 
-  const updateCurrentUser = useCallback(
-    (user: UserInfo) => {
-      setCurrentUser(user);
-      editor?.commands.updateUser(user);
-      localStorage.setItem("tiptap:user", JSON.stringify(user));
-    },
-    [editor],
-  );
-
-  useEffect(() => {
-    currentUserRef.current = currentUser;
-  }, [currentUser]);
+  const hasSeed = useCallback(() => !!seedDocRef.current, []);
 
   useEffect(() => {
     let mounted = true;
@@ -144,10 +150,8 @@ export const useCollabEditor = (room?: string): UseCollabEditorResult => {
 
   return {
     editor,
-    currentUser,
-    updateCurrentUser,
     uniqueUsers,
     prepareSeedFromEditor,
-    hasSeed: !!seedDocRef.current,
+    hasSeed,
   };
 };

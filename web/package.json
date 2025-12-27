@@ -48,6 +48,7 @@
     "@tiptap/react": "^3.14.0",
     "@tiptap/starter-kit": "^3.14.0",
     "@tiptap/y-tiptap": "^3.0.1",
+    "broadcast-channel": "^7.2.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lodash-es": "^4.17.22",
