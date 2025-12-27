@@ -1,0 +1,20 @@
+{
+	"name": "light-doc-partyserver",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"deploy": "wrangler deploy",
+		"dev": "wrangler dev",
+		"start": "wrangler dev",
+		"cf-typegen": "wrangler types"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.3.10",
+		"typescript": "^5.9.3",
+		"wrangler": "4.54.0"
+	},
+	"dependencies": {
+		"partyserver": "^0.1.0",
+		"y-partyserver": "^1.0.0"
+	}
+}
