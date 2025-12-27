@@ -1,11 +1,16 @@
-import { routePartykitRequest } from "partyserver";
-import { drizzle, type DrizzleD1Database } from "drizzle-orm/d1";
 import { eq } from "drizzle-orm";
+import { type DrizzleD1Database, drizzle } from "drizzle-orm/d1";
+import { routePartykitRequest } from "partyserver";
+import { YServer } from "y-partyserver";
 import * as Y from "yjs";
 import { yDocs } from "./db/schema";
-import { YServer } from "y-partyserver";
 
 export class MyYServer extends YServer {
+	static callbackOptions = {
+		debounceWait: 2000,
+		debounceMaxWait: 10000,
+		timeout: 5000,
+	};
 
 	private db!: DrizzleD1Database;
 
@@ -14,7 +19,11 @@ export class MyYServer extends YServer {
 	}
 
 	async onLoad() {
-		const row = await this.db.select().from(yDocs).where(eq(yDocs.name, this.name)).get();
+		const row = await this.db
+			.select()
+			.from(yDocs)
+			.where(eq(yDocs.name, this.name))
+			.get();
 		if (row) {
 			Y.applyUpdate(this.document, row.state);
 		}
@@ -22,7 +31,9 @@ export class MyYServer extends YServer {
 
 	async onSave() {
 		const update = Y.encodeStateAsUpdate(this.document);
-		await this.db.insert(yDocs).values({ name: this.name, state: update, updatedAt: new Date() })
+		await this.db
+			.insert(yDocs)
+			.values({ name: this.name, state: update, updatedAt: new Date() })
 			.onConflictDoUpdate({
 				target: yDocs.name,
 				set: { state: update, updatedAt: new Date() },
