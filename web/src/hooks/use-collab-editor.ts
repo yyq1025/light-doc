@@ -11,6 +11,7 @@ import { useEditorState } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { prosemirrorJSONToYDoc } from "@tiptap/y-tiptap";
 import { uniqBy } from "lodash-es";
+import { nanoid } from "nanoid";
 import {
   useCallback,
   useEffect,
@@ -29,8 +30,7 @@ import { getRoomKey, Y_FRAGMENT_NAME } from "@/lib/tiptap";
 type UseCollabEditorResult = {
   editor: Editor | null;
   uniqueUsers: (UserInfo & { clientId: number })[];
-  prepareSeedFromEditor: () => void;
-  hasSeed: () => boolean;
+  startSession: () => string | null;
 };
 
 export const useCollabEditor = (
@@ -51,16 +51,15 @@ export const useCollabEditor = (
     UpdateEditorUser(currentUser);
   }, [currentUser]);
 
-  const prepareSeedFromEditor = useCallback(() => {
-    if (!editor || seedDocRef.current) return;
+  const startSession = useCallback(() => {
+    if (!editor || seedDocRef.current) return null;
     seedDocRef.current = prosemirrorJSONToYDoc(
       editor.schema,
       editor.getJSON(),
       Y_FRAGMENT_NAME,
     );
+    return nanoid();
   }, [editor]);
-
-  const hasSeed = useCallback(() => !!seedDocRef.current, []);
 
   useEffect(() => {
     let mounted = true;
@@ -151,7 +150,6 @@ export const useCollabEditor = (
   return {
     editor,
     uniqueUsers,
-    prepareSeedFromEditor,
-    hasSeed,
+    startSession,
   };
 };

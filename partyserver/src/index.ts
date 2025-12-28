@@ -6,12 +6,6 @@ import * as Y from "yjs";
 import { yDocs } from "./db/schema";
 
 export class MyYServer extends YServer {
-	static callbackOptions = {
-		debounceWait: 2000,
-		debounceMaxWait: 10000,
-		timeout: 5000,
-	};
-
 	private db: DrizzleD1Database | null = null;
 
 	private getDb() {
