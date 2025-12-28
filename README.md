@@ -1,4 +1,4 @@
-# Light Doc
+# Light Doc ([Live Demo](light-doc-web.yueqian8.workers.dev))
 
 A lightweight collaborative doc editor built with **TipTap + Yjs** on the frontend and **PartyServer (Cloudflare Durable Objects)** on the backend.
 
@@ -8,7 +8,7 @@ A lightweight collaborative doc editor built with **TipTap + Yjs** on the fronte
 - **Offline-first UX**: documents persist locally via IndexedDB and become editable after local state sync completes.
 - **Edge-native backend**: collaboration server runs on Cloudflare Workers + Durable Objects, with persistence to **Cloudflare D1** via **Drizzle ORM**.
 - **Modern TypeScript stack**: React 19, TanStack Start/Router, Vite, and end-to-end type-safe patterns.
-- **Production-minded tooling**: Biome for lint/format, Zod for runtime validation, and accessible UI primitives (shadcn/ui components).
+- **Production-minded tooling**: Biome for lint/format, Zod for runtime validation, and shadcn/ui components.
 
 ## Features
 
