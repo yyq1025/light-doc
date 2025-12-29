@@ -1,6 +1,6 @@
 # Light Doc ([Live Demo](https://light-doc-web.yueqian8.workers.dev))
 
-A lightweight collaborative doc editor built with **TipTap + Yjs** on the frontend and **PartyServer (Cloudflare Durable Objects)** on the backend; inspired by collaboration flow of [Excalidraw](https://excalidraw.com).
+A lightweight collaborative doc editor built with **TipTap + Yjs** on the frontend and **PartyServer (Cloudflare Durable Objects)** on the backend; inspired by the collaboration flow of [Excalidraw](https://excalidraw.com).
 
 ## Highlights
 
