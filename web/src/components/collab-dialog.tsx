@@ -75,7 +75,6 @@ export function CollabDialog({
             Invite people to collaborate on your doc.
           </DialogDescription>
         </DialogHeader>
-
         {room ? (
           <form
             onSubmit={(e) => {
@@ -114,7 +113,7 @@ export function CollabDialog({
                   <InputGroupInput
                     id="link"
                     name="link"
-                    placeholder={window.location.href}
+                    value={window.location.href}
                     readOnly
                   />
                   <InputGroupAddon align="inline-end">

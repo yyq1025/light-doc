@@ -8,7 +8,7 @@ import {
   UserRoundPlus,
   UsersRound,
 } from "lucide-react";
-import { useState } from "react";
+import { Activity, useState } from "react";
 import { CollabDialog } from "@/components/collab-dialog";
 import { EditorToolbar } from "@/components/editor-toolbar";
 import { LoadFromFileDialog } from "@/components/load-from-file-dialog";
@@ -115,30 +115,28 @@ export default function Tiptap({ room }: { room?: string }) {
                   </DropdownMenuPortal>
                 </DropdownMenuSub>
               </DropdownMenuGroup>
-              {room && (
-                <>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuGroup>
-                    <DropdownMenuItem
-                      variant="destructive"
-                      onSelect={() =>
-                        navigate({
-                          to: "/",
-                          search: (prev) => ({ ...prev, room: undefined }),
-                        })
-                      }
-                    >
-                      <LogOut /> Leave Session
-                    </DropdownMenuItem>
-                  </DropdownMenuGroup>
-                </>
-              )}
+              <Activity mode={room ? "visible" : "hidden"}>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuItem
+                    variant="destructive"
+                    onSelect={() =>
+                      navigate({
+                        to: "/",
+                        search: (prev) => ({ ...prev, room: undefined }),
+                      })
+                    }
+                  >
+                    <LogOut /> Leave Session
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+              </Activity>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
         <EditorToolbar editor={editor} />
         <div className="flex justify-end gap-4">
-          {room && (
+          <Activity mode={room ? "visible" : "hidden"}>
             <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2">
               {uniqueUsers.slice(0, 2).map((user) => (
                 <Tooltip key={user.id}>
@@ -162,7 +160,7 @@ export default function Tiptap({ room }: { room?: string }) {
                 </Avatar>
               )}
             </div>
-          )}
+          </Activity>
           {room ? (
             <Button variant="outline" onClick={() => setShowCollabDialog(true)}>
               <UsersRound /> Collaboration
