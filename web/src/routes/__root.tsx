@@ -1,7 +1,12 @@
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import {
+  createRootRoute,
+  HeadContent,
+  Outlet,
+  Scripts,
+} from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
-
+import { UserProvider } from "@/contexts/user-context";
 import appCss from "../styles.css?url";
 
 export const Route = createRootRoute({
@@ -25,11 +30,11 @@ export const Route = createRootRoute({
       },
     ],
   }),
-
-  shellComponent: RootDocument,
+  component: RootComponent,
+  shellComponent: RootShell,
 });
 
-function RootDocument({ children }: { children: React.ReactNode }) {
+function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
@@ -51,5 +56,13 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <Scripts />
       </body>
     </html>
+  );
+}
+
+function RootComponent() {
+  return (
+    <UserProvider>
+      <Outlet />
+    </UserProvider>
   );
 }

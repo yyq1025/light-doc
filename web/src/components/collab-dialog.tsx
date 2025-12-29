@@ -25,8 +25,8 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group";
+import { useUser } from "@/contexts/user-context";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
-import { useCurrentUser } from "@/hooks/use-current-user";
 
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -45,26 +45,26 @@ export function CollabDialog({
   room,
   onStartSession,
 }: CollabDialogProps) {
-  const { currentUser, updateCurrentUser } = useCurrentUser();
+  const { user, updateUser } = useUser();
   const { copyToClipboard, isCopied } = useCopyToClipboard();
   const form = useForm({
     defaultValues: {
-      name: currentUser.name,
+      name: user.name,
     },
     validators: {
       onChange: formSchema,
     },
     onSubmit: ({ value }) => {
-      updateCurrentUser({
-        ...currentUser,
+      updateUser({
+        ...user,
         name: value.name,
       });
     },
   });
 
   useEffect(() => {
-    form.reset({ name: currentUser.name });
-  }, [currentUser.name, form]);
+    form.reset({ name: user.name });
+  }, [user.name, form]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

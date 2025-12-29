@@ -32,16 +32,11 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useCollabEditor } from "@/hooks/use-collab-editor";
-import { useCurrentUser } from "@/hooks/use-current-user";
 import { downloadTextFile } from "@/lib/tiptap";
 
 export default function Tiptap({ room }: { room?: string }) {
   const navigate = useNavigate();
-  const { currentUser } = useCurrentUser();
-  const { editor, uniqueUsers, startSession } = useCollabEditor(
-    room,
-    currentUser,
-  );
+  const { editor, uniqueUsers, startSession } = useCollabEditor(room);
   const [showAlertDialog, setShowAlertDialog] = useState(false);
   const [showCollabDialog, setShowCollabDialog] = useState(false);
   const copyToNewRoom = () => {

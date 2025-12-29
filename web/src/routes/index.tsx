@@ -7,7 +7,6 @@ type RootSearch = {
 
 export const Route = createFileRoute("/")({
   component: App,
-  ssr: false,
   validateSearch: (search: RootSearch) => {
     return {
       room: search.room?.toString(),

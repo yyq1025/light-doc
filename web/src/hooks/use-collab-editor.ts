@@ -24,6 +24,7 @@ import { IndexeddbPersistence } from "y-indexeddb";
 import YProvider from "y-partyserver/provider";
 import { WebrtcProvider } from "y-webrtc";
 import * as Y from "yjs";
+import { useUser } from "@/contexts/user-context";
 import type { UserInfo } from "@/lib/tiptap";
 import { getRoomKey, Y_FRAGMENT_NAME } from "@/lib/tiptap";
 
@@ -35,8 +36,8 @@ type UseCollabEditorResult = {
 
 export const useCollabEditor = (
   room: string | undefined,
-  currentUser: UserInfo,
 ): UseCollabEditorResult => {
+  const { user: currentUser } = useUser();
   const currentUserRef = useRef(currentUser);
   currentUserRef.current = currentUser;
 
