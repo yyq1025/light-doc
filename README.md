@@ -18,50 +18,44 @@ A lightweight collaborative doc editor built with **TipTap + Yjs** on the fronte
 - “Share link” collaboration sessions (`/?room=...`) with presence avatars and colored carets
 - Solo mode still supports cross-tab sync and local persistence
 
-## Architecture (high level)
+## Getting Started
 
-- `web/`: React app that hosts the TipTap editor and connects to a Yjs provider.
-  - Uses `y-indexeddb` for local persistence.
-  - Uses `y-partyserver` when `room` is present, otherwise a WebRTC provider for local/cross-tab sync.
-- `partyserver/`: Cloudflare Worker that routes PartyServer requests and hosts a `YServer` implementation.
-  - Loads/saves Yjs document state into `y_docs` table in D1 using Drizzle ORM.
-
-## Local development
-
-Backend (PartyServer):
+To run this application:
 
 ```bash
-cd partyserver
 pnpm install
+npx wrangler d1 migrations apply light-doc-db --local
 pnpm dev
 ```
 
-Frontend (Web):
+## Building For Production
+
+To build this application for production:
 
 ```bash
-cd web
-pnpm install
-pnpm dev
+pnpm build
 ```
 
-Notes:
-- `web/.env.local` contains `VITE_PARTYSERVER_URL=localhost:8787`.
-- Open `http://localhost:3000`, click **Share → Start Session**, then open the copied link in another browser/tab to see live collaboration.
+## Testing
 
-## Deploy
+This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
 
 ```bash
-cd partyserver
-pnpm deploy
+pnpm test
 ```
+
+## Styling
+
+This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
+
+
+## Linting & Formatting
+
+This project uses [Biome](https://biomejs.dev/) for linting and formatting. The following scripts are available:
+
 
 ```bash
-cd web
-pnpm deploy
+pnpm lint
+pnpm format
+pnpm check
 ```
-
-## Repo layout
-
-- `web/` – frontend app (TipTap + Yjs, TanStack Start/Router, Tailwind)
-- `partyserver/` – collaboration backend (PartyServer, Durable Objects, D1, Drizzle)
-
