@@ -102,33 +102,37 @@ export function EditorToolbar({ editor }: { editor: Editor }) {
     <ScrollArea className="min-w-0 bg-background/85 backdrop-blur-md rounded-md border">
       <div className="flex items-center gap-1 p-1">
         <Tooltip>
-          <TooltipTrigger asChild>
-            <span className="inline-flex">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => editor.chain().focus().undo().run()}
-                disabled={!editorState.canUndo}
-              >
-                <Undo />
-              </Button>
-            </span>
-          </TooltipTrigger>
+          <TooltipTrigger
+            render={
+              <span className="inline-flex">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => editor.chain().focus().undo().run()}
+                  disabled={!editorState.canUndo}
+                >
+                  <Undo />
+                </Button>
+              </span>
+            }
+          />
           <TooltipContent side="bottom">Undo</TooltipContent>
         </Tooltip>
         <Tooltip>
-          <TooltipTrigger asChild>
-            <span className="inline-flex">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => editor.chain().focus().redo().run()}
-                disabled={!editorState.canRedo}
-              >
-                <Redo />
-              </Button>
-            </span>
-          </TooltipTrigger>
+          <TooltipTrigger
+            render={
+              <span className="inline-flex">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => editor.chain().focus().redo().run()}
+                  disabled={!editorState.canRedo}
+                >
+                  <Redo />
+                </Button>
+              </span>
+            }
+          />
           <TooltipContent side="bottom">Redo</TooltipContent>
         </Tooltip>
         <Separator
@@ -137,43 +141,47 @@ export function EditorToolbar({ editor }: { editor: Editor }) {
         />
         <DropdownMenu modal={false}>
           <Tooltip>
-            <TooltipTrigger asChild>
-              <span className="inline-flex">
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className={cn(
-                      "px-2 data-[state=open]:bg-accent",
-                      editorState.headingLevel && "bg-accent",
-                    )}
-                  >
-                    <span className="inline-flex items-center">
-                      {editorState.headingLevel === 1 ? (
-                        <Heading1 />
-                      ) : editorState.headingLevel === 2 ? (
-                        <Heading2 />
-                      ) : editorState.headingLevel === 3 ? (
-                        <Heading3 />
-                      ) : editorState.headingLevel === 4 ? (
-                        <Heading4 />
-                      ) : editorState.headingLevel === 5 ? (
-                        <Heading5 />
-                      ) : editorState.headingLevel === 6 ? (
-                        <Heading6 />
-                      ) : (
-                        <Heading />
-                      )}
-                      <ChevronDown className="size-3" />
-                    </span>
-                  </Button>
-                </DropdownMenuTrigger>
-              </span>
-            </TooltipTrigger>
+            <TooltipTrigger
+              render={
+                <span className="inline-flex">
+                  <DropdownMenuTrigger
+                    render={
+                      <Button
+                        variant="ghost"
+                        className={cn(
+                          "px-2 data-[state=open]:bg-accent",
+                          editorState.headingLevel && "bg-accent",
+                        )}
+                      >
+                        <span className="inline-flex items-center">
+                          {editorState.headingLevel === 1 ? (
+                            <Heading1 />
+                          ) : editorState.headingLevel === 2 ? (
+                            <Heading2 />
+                          ) : editorState.headingLevel === 3 ? (
+                            <Heading3 />
+                          ) : editorState.headingLevel === 4 ? (
+                            <Heading4 />
+                          ) : editorState.headingLevel === 5 ? (
+                            <Heading5 />
+                          ) : editorState.headingLevel === 6 ? (
+                            <Heading6 />
+                          ) : (
+                            <Heading />
+                          )}
+                          <ChevronDown className="size-3" />
+                        </span>
+                      </Button>
+                    }
+                  />
+                </span>
+              }
+            />
             <TooltipContent side="bottom">Heading</TooltipContent>
           </Tooltip>
-          <DropdownMenuContent align="start">
+          <DropdownMenuContent align="start" className="w-36">
             <DropdownMenuRadioGroup
-              value={editorState.headingLevel?.toString()}
+              value={editorState.headingLevel?.toString() || ""}
               onValueChange={(value) => {
                 const level = parseInt(value, 10) as 1 | 2 | 3 | 4 | 5 | 6;
                 editor.chain().focus().setHeading({ level }).run();
@@ -207,79 +215,89 @@ export function EditorToolbar({ editor }: { editor: Editor }) {
           </DropdownMenuContent>
         </DropdownMenu>
         <Tooltip>
-          <TooltipTrigger asChild>
-            <span className="inline-flex">
-              <Toggle
-                onPressedChange={() =>
-                  editor.chain().focus().toggleBulletList().run()
-                }
-                pressed={editorState.isBulletList}
-              >
-                <List />
-              </Toggle>
-            </span>
-          </TooltipTrigger>
+          <TooltipTrigger
+            render={
+              <span className="inline-flex">
+                <Toggle
+                  onPressedChange={() =>
+                    editor.chain().focus().toggleBulletList().run()
+                  }
+                  pressed={editorState.isBulletList}
+                >
+                  <List />
+                </Toggle>
+              </span>
+            }
+          />
           <TooltipContent side="bottom">Bullet List</TooltipContent>
         </Tooltip>
         <Tooltip>
-          <TooltipTrigger asChild>
-            <span className="inline-flex">
-              <Toggle
-                onPressedChange={() =>
-                  editor.chain().focus().toggleOrderedList().run()
-                }
-                pressed={editorState.isOrderedList}
-              >
-                <ListOrdered />
-              </Toggle>
-            </span>
-          </TooltipTrigger>
+          <TooltipTrigger
+            render={
+              <span className="inline-flex">
+                <Toggle
+                  onPressedChange={() =>
+                    editor.chain().focus().toggleOrderedList().run()
+                  }
+                  pressed={editorState.isOrderedList}
+                >
+                  <ListOrdered />
+                </Toggle>
+              </span>
+            }
+          />
           <TooltipContent side="bottom">Ordered List</TooltipContent>
         </Tooltip>
         <Tooltip>
-          <TooltipTrigger asChild>
-            <span className="inline-flex">
-              <Toggle
-                onPressedChange={() =>
-                  editor.chain().focus().toggleCodeBlock().run()
-                }
-                pressed={editorState.isCodeBlock}
-              >
-                <SquareCode />
-              </Toggle>
-            </span>
-          </TooltipTrigger>
+          <TooltipTrigger
+            render={
+              <span className="inline-flex">
+                <Toggle
+                  onPressedChange={() =>
+                    editor.chain().focus().toggleCodeBlock().run()
+                  }
+                  pressed={editorState.isCodeBlock}
+                >
+                  <SquareCode />
+                </Toggle>
+              </span>
+            }
+          />
           <TooltipContent side="bottom">Code Block</TooltipContent>
         </Tooltip>
         <Tooltip>
-          <TooltipTrigger asChild>
-            <span className="inline-flex">
-              <Toggle
-                onPressedChange={() =>
-                  editor.chain().focus().toggleBlockquote().run()
-                }
-                disabled={!editorState.canBlockquote}
-                pressed={editorState.isBlockquote}
-              >
-                <TextQuote />
-              </Toggle>
-            </span>
-          </TooltipTrigger>
+          <TooltipTrigger
+            render={
+              <span className="inline-flex">
+                <Toggle
+                  onPressedChange={() =>
+                    editor.chain().focus().toggleBlockquote().run()
+                  }
+                  disabled={!editorState.canBlockquote}
+                  pressed={editorState.isBlockquote}
+                >
+                  <TextQuote />
+                </Toggle>
+              </span>
+            }
+          />
           <TooltipContent side="bottom">Blockquote</TooltipContent>
         </Tooltip>
         <Tooltip>
-          <TooltipTrigger asChild>
-            <span className="inline-flex">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => editor.chain().focus().clearNodes().run()}
-                disabled={!editorState.canClearNodes}
-              >
-                <Eraser />
-              </Button>
-            </span>
-          </TooltipTrigger>
+          <TooltipTrigger
+            render={
+              <span className="inline-flex">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => editor.chain().focus().clearNodes().run()}
+                  disabled={!editorState.canClearNodes}
+                >
+                  <Eraser />
+                </Button>
+              </span>
+            }
+          />
           <TooltipContent side="bottom">Clear Formatting</TooltipContent>
         </Tooltip>
         <Separator
@@ -287,115 +305,129 @@ export function EditorToolbar({ editor }: { editor: Editor }) {
           className="data-[orientation=vertical]:h-6"
         />
         <Tooltip>
-          <TooltipTrigger asChild>
-            <span className="inline-flex">
-              <Toggle
-                onPressedChange={() =>
-                  editor.chain().focus().toggleBold().run()
-                }
-                disabled={!editorState.canBold}
-                pressed={editorState.isBold}
-              >
-                <Bold />
-              </Toggle>
-            </span>
-          </TooltipTrigger>
+          <TooltipTrigger
+            render={
+              <span className="inline-flex">
+                <Toggle
+                  onPressedChange={() =>
+                    editor.chain().focus().toggleBold().run()
+                  }
+                  disabled={!editorState.canBold}
+                  pressed={editorState.isBold}
+                >
+                  <Bold />
+                </Toggle>
+              </span>
+            }
+          />
           <TooltipContent side="bottom">Bold</TooltipContent>
         </Tooltip>
         <Tooltip>
-          <TooltipTrigger asChild>
-            <span className="inline-flex">
-              <Toggle
-                onPressedChange={() =>
-                  editor.chain().focus().toggleItalic().run()
-                }
-                disabled={!editorState.canItalic}
-                pressed={editorState.isItalic}
-              >
-                <Italic />
-              </Toggle>
-            </span>
-          </TooltipTrigger>
+          <TooltipTrigger
+            render={
+              <span className="inline-flex">
+                <Toggle
+                  onPressedChange={() =>
+                    editor.chain().focus().toggleItalic().run()
+                  }
+                  disabled={!editorState.canItalic}
+                  pressed={editorState.isItalic}
+                >
+                  <Italic />
+                </Toggle>
+              </span>
+            }
+          />
           <TooltipContent side="bottom">Italic</TooltipContent>
         </Tooltip>
         <Tooltip>
-          <TooltipTrigger asChild>
-            <span className="inline-flex">
-              <Toggle
-                onPressedChange={() =>
-                  editor.chain().focus().toggleStrike().run()
-                }
-                disabled={!editorState.canStrike}
-                pressed={editorState.isStrike}
-              >
-                <Strikethrough />
-              </Toggle>
-            </span>
-          </TooltipTrigger>
+          <TooltipTrigger
+            render={
+              <span className="inline-flex">
+                <Toggle
+                  onPressedChange={() =>
+                    editor.chain().focus().toggleStrike().run()
+                  }
+                  disabled={!editorState.canStrike}
+                  pressed={editorState.isStrike}
+                >
+                  <Strikethrough />
+                </Toggle>
+              </span>
+            }
+          />
           <TooltipContent side="bottom">Strike</TooltipContent>
         </Tooltip>
         <Tooltip>
-          <TooltipTrigger asChild>
-            <span className="inline-flex">
-              <Toggle
-                onPressedChange={() =>
-                  editor.chain().focus().toggleCode().run()
-                }
-                disabled={!editorState.canCode}
-                pressed={editorState.isCode}
-              >
-                <CodeXml />
-              </Toggle>
-            </span>
-          </TooltipTrigger>
+          <TooltipTrigger
+            render={
+              <span className="inline-flex">
+                <Toggle
+                  onPressedChange={() =>
+                    editor.chain().focus().toggleCode().run()
+                  }
+                  disabled={!editorState.canCode}
+                  pressed={editorState.isCode}
+                >
+                  <CodeXml />
+                </Toggle>
+              </span>
+            }
+          />
           <TooltipContent side="bottom">Code</TooltipContent>
         </Tooltip>
 
         <Tooltip>
-          <TooltipTrigger asChild>
-            <span className="inline-flex">
-              <Toggle
-                onPressedChange={() =>
-                  editor.chain().focus().toggleUnderline().run()
-                }
-                disabled={!editorState.canUnderline}
-                pressed={editorState.isUnderline}
-              >
-                <Underline />
-              </Toggle>
-            </span>
-          </TooltipTrigger>
+          <TooltipTrigger
+            render={
+              <span className="inline-flex">
+                <Toggle
+                  onPressedChange={() =>
+                    editor.chain().focus().toggleUnderline().run()
+                  }
+                  disabled={!editorState.canUnderline}
+                  pressed={editorState.isUnderline}
+                >
+                  <Underline />
+                </Toggle>
+              </span>
+            }
+          />
           <TooltipContent side="bottom">Underline</TooltipContent>
         </Tooltip>
         <Tooltip>
-          <TooltipTrigger asChild>
-            <span className="inline-flex">
-              <Toggle
-                onPressedChange={() =>
-                  editor.chain().focus().toggleHighlight().run()
-                }
-                disabled={!editorState.canHighlight}
-                pressed={editorState.isHighlight}
-              >
-                <Highlighter />
-              </Toggle>
-            </span>
-          </TooltipTrigger>
+          <TooltipTrigger
+            render={
+              <span className="inline-flex">
+                <Toggle
+                  onPressedChange={() =>
+                    editor.chain().focus().toggleHighlight().run()
+                  }
+                  disabled={!editorState.canHighlight}
+                  pressed={editorState.isHighlight}
+                >
+                  <Highlighter />
+                </Toggle>
+              </span>
+            }
+          />
           <TooltipContent side="bottom">Highlight</TooltipContent>
         </Tooltip>
         <Tooltip>
-          <TooltipTrigger asChild>
-            <span className="inline-flex">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => editor.chain().focus().unsetAllMarks().run()}
-                disabled={!editorState.canClearMarks}
-              >
-                <RemoveFormatting />
-              </Button>
-            </span>
-          </TooltipTrigger>
+          <TooltipTrigger
+            render={
+              <span className="inline-flex">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => editor.chain().focus().unsetAllMarks().run()}
+                  disabled={!editorState.canClearMarks}
+                >
+                  <RemoveFormatting />
+                </Button>
+              </span>
+            }
+          />
           <TooltipContent side="bottom">Clear Marks</TooltipContent>
         </Tooltip>
         <Separator
@@ -403,67 +435,75 @@ export function EditorToolbar({ editor }: { editor: Editor }) {
           className="data-[orientation=vertical]:h-6"
         />
         <Tooltip>
-          <TooltipTrigger asChild>
-            <span className="inline-flex">
-              <Toggle
-                onPressedChange={() =>
-                  editor.chain().focus().setTextAlign("left").run()
-                }
-                disabled={!editorState.canTextAlignLeft}
-                pressed={editorState.isTextAlignLeft}
-              >
-                <TextAlignStart />
-              </Toggle>
-            </span>
-          </TooltipTrigger>
+          <TooltipTrigger
+            render={
+              <span className="inline-flex">
+                <Toggle
+                  onPressedChange={() =>
+                    editor.chain().focus().setTextAlign("left").run()
+                  }
+                  disabled={!editorState.canTextAlignLeft}
+                  pressed={editorState.isTextAlignLeft}
+                >
+                  <TextAlignStart />
+                </Toggle>
+              </span>
+            }
+          />
           <TooltipContent side="bottom">Align Left</TooltipContent>
         </Tooltip>
         <Tooltip>
-          <TooltipTrigger asChild>
-            <span className="inline-flex">
-              <Toggle
-                onPressedChange={() =>
-                  editor.chain().focus().setTextAlign("center").run()
-                }
-                disabled={!editorState.canTextAlignCenter}
-                pressed={editorState.isTextAlignCenter}
-              >
-                <TextAlignCenter />
-              </Toggle>
-            </span>
-          </TooltipTrigger>
+          <TooltipTrigger
+            render={
+              <span className="inline-flex">
+                <Toggle
+                  onPressedChange={() =>
+                    editor.chain().focus().setTextAlign("center").run()
+                  }
+                  disabled={!editorState.canTextAlignCenter}
+                  pressed={editorState.isTextAlignCenter}
+                >
+                  <TextAlignCenter />
+                </Toggle>
+              </span>
+            }
+          />
           <TooltipContent side="bottom">Align Center</TooltipContent>
         </Tooltip>
         <Tooltip>
-          <TooltipTrigger asChild>
-            <span className="inline-flex">
-              <Toggle
-                onPressedChange={() =>
-                  editor.chain().focus().setTextAlign("right").run()
-                }
-                disabled={!editorState.canTextAlignRight}
-                pressed={editorState.isTextAlignRight}
-              >
-                <TextAlignEnd />
-              </Toggle>
-            </span>
-          </TooltipTrigger>
+          <TooltipTrigger
+            render={
+              <span className="inline-flex">
+                <Toggle
+                  onPressedChange={() =>
+                    editor.chain().focus().setTextAlign("right").run()
+                  }
+                  disabled={!editorState.canTextAlignRight}
+                  pressed={editorState.isTextAlignRight}
+                >
+                  <TextAlignEnd />
+                </Toggle>
+              </span>
+            }
+          />
           <TooltipContent side="bottom">Align Right</TooltipContent>
         </Tooltip>
         <Tooltip>
-          <TooltipTrigger asChild>
-            <span className="inline-flex">
-              <Toggle
-                onPressedChange={() =>
-                  editor.chain().focus().setTextAlign("justify").run()
-                }
-                disabled={!editorState.canTextAlignJustify}
-                pressed={editorState.isTextAlignJustify}
-              >
-                <TextAlignJustify />
-              </Toggle>
-            </span>
-          </TooltipTrigger>
+          <TooltipTrigger
+            render={
+              <span className="inline-flex">
+                <Toggle
+                  onPressedChange={() =>
+                    editor.chain().focus().setTextAlign("justify").run()
+                  }
+                  disabled={!editorState.canTextAlignJustify}
+                  pressed={editorState.isTextAlignJustify}
+                >
+                  <TextAlignJustify />
+                </Toggle>
+              </span>
+            }
+          />
           <TooltipContent side="bottom">Align Justify</TooltipContent>
         </Tooltip>
         <Separator
@@ -471,17 +511,21 @@ export function EditorToolbar({ editor }: { editor: Editor }) {
           className="data-[orientation=vertical]:h-6"
         />
         <Tooltip>
-          <TooltipTrigger asChild>
-            <span className="inline-flex">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => editor.chain().focus().setHorizontalRule().run()}
-              >
-                <Minus />
-              </Button>
-            </span>
-          </TooltipTrigger>
+          <TooltipTrigger
+            render={
+              <span className="inline-flex">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() =>
+                    editor.chain().focus().setHorizontalRule().run()
+                  }
+                >
+                  <Minus />
+                </Button>
+              </span>
+            }
+          />
           <TooltipContent side="bottom">Horizontal Rule</TooltipContent>
         </Tooltip>
       </div>

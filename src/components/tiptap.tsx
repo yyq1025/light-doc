@@ -57,11 +57,13 @@ export default function Tiptap({ room }: { room?: string }) {
       <div className="sticky top-0 z-10 grid grid-cols-[1fr_auto_1fr] gap-4">
         <div>
           <DropdownMenu modal={false}>
-            <DropdownMenuTrigger asChild>
-              <Button variant="secondary" size="icon">
-                <Menu />
-              </Button>
-            </DropdownMenuTrigger>
+            <DropdownMenuTrigger
+              render={
+                <Button variant="secondary" size="icon">
+                  <Menu />
+                </Button>
+              }
+            />
             <DropdownMenuContent className="w-52" align="start">
               <DropdownMenuGroup>
                 <DropdownMenuSub>
@@ -140,15 +142,20 @@ export default function Tiptap({ room }: { room?: string }) {
             <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2">
               {uniqueUsers.slice(0, 2).map((user) => (
                 <Tooltip key={user.id}>
-                  <TooltipTrigger asChild>
-                    <Avatar>
-                      <AvatarFallback
-                        style={{ backgroundColor: user.color, color: "white" }}
-                      >
-                        {user.name[0]}
-                      </AvatarFallback>
-                    </Avatar>
-                  </TooltipTrigger>
+                  <TooltipTrigger
+                    render={
+                      <Avatar>
+                        <AvatarFallback
+                          style={{
+                            backgroundColor: user.color,
+                            color: "white",
+                          }}
+                        >
+                          {user.name[0]}
+                        </AvatarFallback>
+                      </Avatar>
+                    }
+                  />
                   <TooltipContent side="bottom">{user.name}</TooltipContent>
                 </Tooltip>
               ))}

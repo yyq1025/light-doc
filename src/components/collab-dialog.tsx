@@ -132,11 +132,13 @@ export function CollabDialog({
               </Field>
             </FieldGroup>
             <DialogFooter>
-              <DialogClose asChild>
-                <Button type="button" variant="secondary">
-                  Cancel
-                </Button>
-              </DialogClose>
+              <DialogClose
+                render={
+                  <Button type="button" variant="secondary">
+                    Cancel
+                  </Button>
+                }
+              />
               <form.Subscribe selector={(state) => state.isDefaultValue}>
                 {(isDefaultValue) => (
                   <Button type="submit" disabled={isDefaultValue}>
@@ -148,11 +150,13 @@ export function CollabDialog({
           </form>
         ) : (
           <DialogFooter>
-            <DialogClose asChild>
-              <Button type="button" variant="secondary">
-                Cancel
-              </Button>
-            </DialogClose>
+            <DialogClose
+              render={
+                <Button type="button" variant="secondary">
+                  Cancel
+                </Button>
+              }
+            />
             <Button type="button" disabled={!!room} onClick={onStartSession}>
               <Play /> Start Session
             </Button>
