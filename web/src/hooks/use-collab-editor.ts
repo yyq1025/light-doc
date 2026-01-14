@@ -69,11 +69,9 @@ export const useCollabEditor = (
     seedDocRef.current = null;
 
     const idb = new IndexeddbPersistence(roomKey, yDoc);
-    const partyserverUrl =
-      import.meta.env.VITE_PARTYSERVER_URL || "localhost:8787";
     const provider = room
-      ? new YProvider(partyserverUrl, roomKey, yDoc, {
-          party: "my-y-server",
+      ? new YProvider(window.location.origin, roomKey, yDoc, {
+          party: "yjs-server",
         })
       : new WebrtcProvider(roomKey, yDoc, { signaling: [] }); // for cross-tab sync only
 

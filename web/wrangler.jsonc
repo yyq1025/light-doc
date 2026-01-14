@@ -3,5 +3,32 @@
   "name": "light-doc-web",
   "compatibility_date": "2025-12-10",
   "compatibility_flags": ["nodejs_compat"],
-  "main": "@tanstack/react-start/server-entry"
+  "main": "./src/server.ts",
+  "migrations": [
+		{
+			"new_sqlite_classes": [
+				"YjsServer"
+			],
+			"tag": "v1"
+		}
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"class_name": "YjsServer",
+				"name": "YjsServer"
+			}
+		]
+	},
+	"observability": {
+		"enabled": true
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "light-doc-db",
+			"database_id": "96c7c004-6f1e-4500-843b-439bb48b5e3f",
+			"migrations_dir": "drizzle"
+		}
+	]
 }
