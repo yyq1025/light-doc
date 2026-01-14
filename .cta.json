@@ -1,5 +1,5 @@
 {
-  "projectName": "light-doc-web",
+  "projectName": "light-doc",
   "mode": "file-router",
   "typescript": true,
   "tailwind": true,
