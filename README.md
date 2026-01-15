@@ -2,6 +2,12 @@
 
 A lightweight collaborative doc editor built with **TipTap + Yjs** on the frontend and **PartyServer (Cloudflare Durable Objects)** on the backend; inspired by the collaboration flow of [Excalidraw](https://excalidraw.com).
 
+## Preview
+
+https://github.com/user-attachments/assets/1dcfca3a-2a8e-4fa3-af09-34ff9377f96d
+
+*Always sync + Full GFM support + File import/export*
+
 ## Highlights
 
 - **Real-time collaboration with CRDTs**: Yjs handles conflict-free edits and presence (multi-cursor) across tabs and users.
