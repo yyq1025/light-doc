@@ -135,10 +135,7 @@ export function EditorToolbar({ editor }: { editor: Editor }) {
           />
           <TooltipContent side="bottom">Redo</TooltipContent>
         </Tooltip>
-        <Separator
-          orientation="vertical"
-          className="data-[orientation=vertical]:h-6"
-        />
+        <Separator orientation="vertical" />
         <DropdownMenu modal={false}>
           <Tooltip>
             <TooltipTrigger
@@ -300,10 +297,7 @@ export function EditorToolbar({ editor }: { editor: Editor }) {
           />
           <TooltipContent side="bottom">Clear Formatting</TooltipContent>
         </Tooltip>
-        <Separator
-          orientation="vertical"
-          className="data-[orientation=vertical]:h-6"
-        />
+        <Separator orientation="vertical" />
         <Tooltip>
           <TooltipTrigger
             render={
@@ -430,10 +424,7 @@ export function EditorToolbar({ editor }: { editor: Editor }) {
           />
           <TooltipContent side="bottom">Clear Marks</TooltipContent>
         </Tooltip>
-        <Separator
-          orientation="vertical"
-          className="data-[orientation=vertical]:h-6"
-        />
+        <Separator orientation="vertical" />
         <Tooltip>
           <TooltipTrigger
             render={
@@ -506,10 +497,7 @@ export function EditorToolbar({ editor }: { editor: Editor }) {
           />
           <TooltipContent side="bottom">Align Justify</TooltipContent>
         </Tooltip>
-        <Separator
-          orientation="vertical"
-          className="data-[orientation=vertical]:h-6"
-        />
+        <Separator orientation="vertical" />
         <Tooltip>
           <TooltipTrigger
             render={
