@@ -73,14 +73,14 @@ export default function Tiptap({ room }: { room?: string }) {
                   <DropdownMenuPortal>
                     <DropdownMenuSubContent>
                       <DropdownMenuItem
-                        onSelect={() => setShowAlertDialog(true)}
+                        onClick={() => setShowAlertDialog(true)}
                       >
                         Markdown (.md)
                       </DropdownMenuItem>
                     </DropdownMenuSubContent>
                   </DropdownMenuPortal>
                 </DropdownMenuSub>
-                <DropdownMenuItem onSelect={() => setShowCollabDialog(true)}>
+                <DropdownMenuItem onClick={() => setShowCollabDialog(true)}>
                   <UsersRound /> Collaboration
                 </DropdownMenuItem>
                 <DropdownMenuSub>
@@ -90,7 +90,7 @@ export default function Tiptap({ room }: { room?: string }) {
                   <DropdownMenuPortal>
                     <DropdownMenuSubContent>
                       <DropdownMenuItem
-                        onSelect={() => {
+                        onClick={() => {
                           if (!editor) return;
                           downloadTextFile({
                             filename: "document.md",
@@ -102,7 +102,7 @@ export default function Tiptap({ room }: { room?: string }) {
                         Markdown (.md)
                       </DropdownMenuItem>
                       <DropdownMenuItem
-                        onSelect={() => {
+                        onClick={() => {
                           if (!editor) return;
                           downloadTextFile({
                             filename: "document.html",
@@ -122,7 +122,7 @@ export default function Tiptap({ room }: { room?: string }) {
                 <DropdownMenuGroup>
                   <DropdownMenuItem
                     variant="destructive"
-                    onSelect={() =>
+                    onClick={() =>
                       navigate({
                         to: "/",
                         search: (prev) => ({ ...prev, room: undefined }),
